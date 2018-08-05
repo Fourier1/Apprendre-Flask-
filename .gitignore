@@ -1,0 +1,8 @@
+env/
+*.pyc
+__pycache__
+microblog/static/tmp/*.jpg
+app.db
+geckodriver.log
+.cache/
+microblog/tests/*.db

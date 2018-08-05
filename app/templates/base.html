@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+    <title>{{ title }} - Microblog</title>
+    {% else %}
+    <title>Welcome to Microblog</title>
+    {% endif %}
+</head>
+<body>
+<div>
+    <!--  href="/index" =  href="{{ url_for('index')}}"-->
+    <a rel="stylesheet" href="{{ url_for('index')}}" style="text-decoration: none; color: firebrick;font-size: 20px; Font-Weight: Bold;"> MICRO - BLOG </a>
+    <a rel="stylesheet" href="{{ url_for('index')}}" style="margin-left: 1000px"> Home </a>
+    <a rel="stylesheet" href="{{ url_for('login')}}" style="margin-left: 10px"> Login </a>
+    <a rel="stylesheet" href="{{ url_for('contact')}}" style="margin-left: 10px"> Contact </a>
+</div>
+<hr>
+<!-- recupérer les informations de connexion saisi par l'utilisateur qui sont sotocké des la methode flash  -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul style="color: lightseagreen; font-size: 15px; text-align: center">
+    {% for message in messages%}
+    <li> {{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<!-- fin de ma recupération des infos -->
+
+{% block content %}
+
+{% endblock %}
+</body>
+</html>
