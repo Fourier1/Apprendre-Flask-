@@ -1,4 +1,5 @@
-env/
+venv/
+migrations/
 *.pyc
 __pycache__
 microblog/static/tmp/*.jpg
