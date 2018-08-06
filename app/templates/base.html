@@ -11,9 +11,13 @@
 <body>
 <div>
     <!--  href="/index" =  href="{{ url_for('index')}}"-->
-    <a rel="stylesheet" href="{{ url_for('index')}}" style="text-decoration: none; color: firebrick;font-size: 20px; Font-Weight: Bold;"> MICRO - BLOG </a>
-    <a rel="stylesheet" href="{{ url_for('index')}}" style="margin-left: 1000px"> Home </a>
+    <a rel="stylesheet" href="{{ url_for('index')}}"
+       style="text-decoration: none; color: firebrick;font-size: 20px; Font-Weight: Bold;"> MICRO - BLOG </a>
+    <a rel="stylesheet" href="{{ url_for('index')}}" style="margin-left: 900px"> Home </a>
     <a rel="stylesheet" href="{{ url_for('login')}}" style="margin-left: 10px"> Login </a>
+    <a rel="stylesheet" href="{{ url_for('login')}}" style="margin-left: 10px"> Login </a>
+    <a rel="stylesheet" href="{{ url_for('user', username=current_user.username)}}" style="margin-left: 10px">
+        Profile </a>
     <a rel="stylesheet" href="{{ url_for('contact')}}" style="margin-left: 10px"> Contact </a>
 </div>
 <hr>

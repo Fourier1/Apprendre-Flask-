@@ -1,42 +1,44 @@
 {%  extends "base.html" %}
 
 {% block content %}
-    <h1 style="color: limegreen; margin-left: 200px; font-size: 35px; text-decoration: underline"> Sign In</h1>
+<h1 style="color: limegreen; margin-left: 200px; font-size: 35px; text-decoration: underline"> Connexion
+    Utilisateur </h1>
 
-    <form action="" method="post" style="color: black; font-size: 20px; Font-Weight: Bold; text-align: center" novalidate>
+<form action="" method="post" style="color: black; font-size: 20px; Font-Weight: Bold; text-align: center" novalidate>
 
-        {{ form.hidden_tag() }}<br><br>
-        <p>
-            {{ form.username.label }} <br>
-            {{ form.username(size=32) }} <br>
+    {{ form.hidden_tag() }}<br><br>
+    <p>
+        {{ form.username.label }} <br>
+        {{ form.username(size=32) }} <br>
 
-            {% for error in form.username.errors %}
+        {% for error in form.username.errors %}
 
-                <span style="color: crimson"> {{ error }}</span>
+        <span style="color: crimson"> {{ error }}</span>
 
-            {% endfor %}
+        {% endfor %}
 
-        </p>
+    </p>
 
 
-        <p>
-            {{ form.password.label }} <br>
-            {{ form.password(size=32) }}<br>
+    <p>
+        {{ form.password.label }} <br>
+        {{ form.password(size=32) }}<br>
 
-            {% for error in form.password.errors %}
+        {% for error in form.password.errors %}
 
-                <span style="color: crimson"> {{ error }}</span>
+        <span style="color: crimson"> {{ error }}</span>
 
-            {% endfor %}
-        </p>
+        {% endfor %}
+    </p>
 
-        <p>
-            {{ form.remember_me() }}{{ form.remember_me.label }}
-        </p>
+    <p>
+        {{ form.remember_me() }}{{ form.remember_me.label }}
+    </p>
 
-        <p>
-            {{ form.submit() }}
-        </p>
-    </form>
+    <p>
+        {{ form.submit() }}
+    </p>
+</form><br>
+<p style="margin-left: 700px">Nouveau utilisateur ? <a href="/register" style="margin-left: 10px"> Cliquer pour ajouter!</a></p>
 
 {% endblock %}
