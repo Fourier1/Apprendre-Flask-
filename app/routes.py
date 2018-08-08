@@ -1,14 +1,24 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 from flask import render_template, flash, redirect, url_for, request
-
 from . import app
-from .froms import LoginForm, RegistrationForm
-
+from .froms import LoginForm, RegistrationForm, EditProfileFrom
 from flask_login import current_user, login_user, logout_user, login_required
-
+from datetime import datetime
 from .models import User
 from . import db
+
+
+# @before_request : enregistre la fonction décorée a éxécuter juste avant la fonction d'affichage
+@app.before_request
+def before_request():
+    """
+    Enregistrer les derniers heur de vicite pour un utilisateur
+    :return: 
+    """
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
 
 
 @app.route('/')
@@ -28,6 +38,10 @@ def index():
         {
             'author': {'username': 'FOURIER'},
             'body': 'le monde n\'est rien d\'autre que du materiel!'
+        },
+        {
+            'author': {'username': 'ONESYME'},
+            'body': 'je suis onesyme le devéloppeur segnieur en python !'
         }
     ]
     title = "Home"
@@ -42,9 +56,9 @@ def login():
     :return: 
     """
     title = "Sign In"
+    web = 'login.html'
     if current_user.is_authenticated:
         return redirect(url_for('index'))
-
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -57,7 +71,7 @@ def login():
             next_page = url_for('index')
         return redirect(next_page)
 
-    return render_template("login.html", title=title, form=form)
+    return render_template(web, title=title, form=form)
 
 
 @app.route('/contact')
@@ -87,17 +101,18 @@ def register():
     :return: 
     """
     title = "Enregistrement"
+    web = "register.html"
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
+        users = User(username=form.username.data, email=form.email.data)
+        users.set_password(form.password.data)
+        db.session.add(users)
         db.session.commit()
         flash('Félicitaion l\'utilisateur a été enregistrer')
         return redirect(url_for('login'))
-    return render_template("register.html", title=title, form=form)
+    return render_template(web, title=title, form=form)
 
 
 @app.route('/user/<username>')
@@ -108,8 +123,34 @@ def user(username):
     :return: 
     """
     user = User.query.filter_by(username=username).first_or_404()
-    port = [
-        {'auteur ': user, 'Text ': 'Test Post #1'},
-        {'auteur ': user, 'Text ': 'Test Post #2'}
+    posts = [
+        {'author': user, 'body': 'Test Post #1'},
+        {'author': user, 'body': 'Test Post #2'},
+        {'author': user, 'body': 'Test Post #3'},
+        {'author': user, 'body': 'Test Post #4'},
     ]
-    return render_template('users.html', user=user, post=port)
+    title = 'profile'
+    web = 'users.html'
+    return render_template(web, user=user, title=title, posts=posts)
+
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    """
+    la vue de profile d'un utilisateur
+    :return: 
+    """
+    title = 'Edité le Profile'
+    web = "edit_profile.html"
+    form = EditProfileFrom(current_user.username)
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash('Vos changements ont été enregistrés')
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template(web, title=title, form=form)

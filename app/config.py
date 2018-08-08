@@ -19,3 +19,11 @@ class config(object):
     # desactivver l'option qui signale a l'appliction chaque fois qu'une modifications est sur le point d'etre effectuée
     #  dans la base de donnée
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # ajouter les detail du serveur de mail pour reçevoir les erreurs pas mail export Variable | windows use set
+    MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    ADMINS = ['your-email@example.com']

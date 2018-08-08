@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1 style="color: limegreen; margin-left: 200px; font-size: 35px; text-decoration: underline"> Editer Profile </h1>
+
+    <form action="" method="post" style="color: black; font-size: 20px; Font-Weight: Bold; text-align: center" novalidate>
+
+           {{ form.hidden_tag() }}<br><br>
+        <p>
+            {{ form.username.label }} <br>
+            {{ form.username(size=32) }} <br>
+
+            {% for error in form.username.errors %}
+
+            <span style="color: crimson"> {{ error }}</span>
+
+            {% endfor %}
+
+        </p>
+
+        <p>
+            {{ form.about_me.label }} <br>
+            {{ form.about_me(size=32) }} <br>
+
+            {% for error in form.about_me.errors %}
+
+            <span style="color: crimson"> {{ error }}</span>
+
+            {% endfor %}
+
+        </p>
+
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+
+
+{% endblock %}

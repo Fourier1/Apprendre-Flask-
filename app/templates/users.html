@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{%  extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+
+<h1 style="color: limegreen; margin-left: 200px; font-size: 35px; text-decoration: underline">
+    Profile Utilisateur
+</h1>
+<br>
+
+<table>
+    <tr valign="top">
+        <tr> <img src="{{ user.avatar(120) }}"  style="margin-left: 250px; margin-bottom: -150px"></tr>
+        <tr>
+            <!--User: -->
+            <h1 style="margin-left: 400px; margin-bottom: 45px">{{user.username }}</h1>
+            <div style="margin-left: 400px">
+                {% if user.about_me %}<p> {{ user.about_me}}</p> {% endif %}
+            </div>
+            {% if user.last_seen %}<p style="margin-left: 400px; margin-top: -10px">Dernière vue: <i>{{ user.last_seen}}</i></p> {% endif %}
+        </tr>
+
+    </tr>
+</table>
+
+{% if user == current_user %}
+    <p style="margin-left: 400px">
+        <a href="{{ url_for('edit_profile') }}"> Editer Vore Profile</a>
+    </p>
+{% endif %}
+<br><br>
+<hr style="margin-top: -20px; padding-bottom: 6px; background-color: #9C1A1C">
+<br>
+{% for post in posts %}
+
+    {% include '_post.html' %}
+
+{% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <br><br><br>
+    <h1 style="color: firebrick; text-align: center; font-size: 40px; text-decoration: none">
+         Une erreur inattendue est survenue
+    </h1>
+        <br>
+        <h1 style="color: black; font-size: 50px; text-align: center"> Erreur: 500 </h1>
+
+    <p style="text-align: center; font-size: 25px">
+        L'administrateur a été averti. Désolé pour le dérangement!
+    </p>
+    <br>
+    <p style="text-align: center">
+        <a href="{{ url_for('index') }}">Back</a>
+    </p>
+
+{% endblock %}
